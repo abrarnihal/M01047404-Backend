@@ -146,9 +146,10 @@
     }
   ],
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "baseUrl", "value": "https://m01047404-cst3144-api.onrender.com" },
     { "key": "lessonId", "value": "" },
     { "key": "teacherId", "value": "olivia-bennett" }
   ]
 }
+
 
