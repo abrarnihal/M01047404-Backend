@@ -16,7 +16,7 @@ router.get('/:lessonid', async (request, response) => {
 
   const database = getDatabase()
   const lessonId = new ObjectId(lessonid)
-  const lesson = await database.collection('lessons').findOne({ _id: lessonId })
+  const lesson = await database.collection('lesson').findOne({ _id: lessonId })
 
   if (!lesson) {
     const error = new Error('No lesson was found with that id.')
@@ -24,11 +24,11 @@ router.get('/:lessonid', async (request, response) => {
     throw error
   }
 
-  const orders = await database.collection('orders')
-    .find({ lessons: lessonId }, { projection: { lessons: 1 } })
+  const orders = await database.collection('order')
+    .find({ lessonIDs: lessonId }, { projection: { lessonIDs: 1 } })
     .toArray()
   const enrolmentCount = orders.reduce((total, order) => (
-    total + order.lessons.filter((selectedId) => selectedId.equals(lessonId)).length
+    total + order.lessonIDs.filter((selectedId) => selectedId.equals(lessonId)).length
   ), 0)
 
   response.json({ lessonId, lessonTitle: lesson.title, enrolmentCount })

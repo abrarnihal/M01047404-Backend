@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "CST3144 BrightSteps API",
-    "description": "Coursework requests for the Express and MongoDB service. Set lessonId from a record returned by GET /lessons before using the booking, update, and enrolment requests.",
+    "description": "CST3144 coursework requests for the Express and MongoDB service. Run GET /lessons first; it saves the first record's id into lessonId. The enrolment request is included to demonstrate the back-end-only challenge and is not called by the frontend.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -14,12 +14,26 @@
       }
     },
     {
-      "name": "Get all lessons",
+      "name": "Get all lessons (sets lessonId)",
       "request": {
         "method": "GET",
         "header": [],
         "url": { "raw": "{{baseUrl}}/lessons", "host": ["{{baseUrl}}"], "path": ["lessons"] }
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const lessons = pm.response.json();",
+              "if (Array.isArray(lessons) && lessons.length > 0 && lessons[0]._id) {",
+              "  pm.collectionVariables.set('lessonId', lessons[0]._id);",
+              "}"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Search lessons by text, price, and availability",
@@ -73,13 +87,13 @@
       }
     },
     {
-      "name": "Update lesson spaces",
+      "name": "Update a lesson attribute (topic)",
       "request": {
         "method": "PUT",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"spaces\": 4\n}",
+          "raw": "{\n  \"topic\": \"Postman Demo Topic\"\n}",
           "options": { "raw": { "language": "json" } }
         },
         "url": { "raw": "{{baseUrl}}/lessons/{{lessonId}}", "host": ["{{baseUrl}}"], "path": ["lessons", "{{lessonId}}"] }
@@ -99,6 +113,14 @@
         "method": "GET",
         "header": [],
         "url": { "raw": "{{baseUrl}}/lesson-images/clay.svg", "host": ["{{baseUrl}}"], "path": ["lesson-images", "clay.svg"] }
+      }
+    },
+    {
+      "name": "Missing lesson image returns 404",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/lesson-images/not-found.svg", "host": ["{{baseUrl}}"], "path": ["lesson-images", "not-found.svg"] }
       }
     },
     {

@@ -19,8 +19,8 @@ async function seedCollection(collection, records, collectionName) {
 async function seedDatabase() {
   try {
     const database = await connectToDatabase()
-    await seedCollection(database.collection('teachers'), teacherSeed, 'teachers')
-    await seedCollection(database.collection('lessons'), lessonSeed, 'lessons')
+    await seedCollection(database.collection('teacher'), teacherSeed, 'teachers')
+    await seedCollection(database.collection('lesson'), lessonSeed, 'lessons')
   } finally {
     await closeDatabase()
   }

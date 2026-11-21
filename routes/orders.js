@@ -6,7 +6,8 @@ const router = express.Router()
 
 // POST /orders stores the customer details and one lesson id per reserved place.
 router.post('/', async (request, response) => {
-  const { name, phone, lessons } = request.body || {}
+  const { name, phone } = request.body || {}
+  const lessons = request.body?.lessonIDs ?? request.body?.lessons
 
   if (typeof name !== 'string' || !/^[A-Za-z ]+$/.test(name.trim())) {
     const error = new Error('Name must contain only letters and spaces.')
@@ -29,7 +30,7 @@ router.post('/', async (request, response) => {
   const lessonIds = lessons.map((id) => new ObjectId(String(id)))
   const uniqueIds = [...new Map(lessonIds.map((id) => [id.toString(), id])).values()]
   const lessonRecords = await getDatabase()
-    .collection('lessons')
+    .collection('lesson')
     .find({ _id: { $in: uniqueIds } })
     .toArray()
 
@@ -47,7 +48,7 @@ router.post('/', async (request, response) => {
 
   for (const lesson of lessonRecords) {
     const places = requestedPlaces.get(lesson._id.toString())
-    if (places > lesson.spaces) {
+    if (places > (lesson.space ?? lesson.spaces ?? 0)) {
       const error = new Error(`${lesson.title} does not have enough spaces for this booking.`)
       error.status = 409
       throw error
@@ -57,10 +58,11 @@ router.post('/', async (request, response) => {
   const order = {
     name: name.trim(),
     phone: phone.trim(),
-    lessons: lessonIds,
+    lessonIDs: lessonIds,
+    spaces: lessonIds.length,
     createdAt: new Date(),
   }
-  const result = await getDatabase().collection('orders').insertOne(order)
+  const result = await getDatabase().collection('order').insertOne(order)
 
   response.status(201).json({
     message: 'Booking request saved.',

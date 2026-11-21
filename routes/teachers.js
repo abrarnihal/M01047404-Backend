@@ -7,8 +7,8 @@ const router = express.Router()
 router.get('/', async (request, response) => {
   const database = getDatabase()
   const [teachers, lessonCounts] = await Promise.all([
-    database.collection('teachers').find({}).toArray(),
-    database.collection('lessons').aggregate([
+    database.collection('teacher').find({}).toArray(),
+    database.collection('lesson').aggregate([
       { $group: { _id: '$teacherId', count: { $sum: 1 } } },
     ]).toArray(),
   ])
@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
 // GET /teachers/:id/lessons returns one teacher with their linked catalogue records.
 router.get('/:id/lessons', async (request, response) => {
   const database = getDatabase()
-  const teacher = await database.collection('teachers').findOne({ id: request.params.id })
+  const teacher = await database.collection('teacher').findOne({ id: request.params.id })
 
   if (!teacher) {
     const error = new Error('No teacher was found with that id.')
@@ -31,7 +31,7 @@ router.get('/:id/lessons', async (request, response) => {
     throw error
   }
 
-  const lessons = await database.collection('lessons')
+  const lessons = await database.collection('lesson')
     .find({ teacherId: teacher.id })
     .toArray()
 
