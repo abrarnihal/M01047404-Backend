@@ -80,7 +80,7 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Demo Student\",\n  \"phone\": \"0123456789\",\n  \"lessons\": [\"{{lessonId}}\"]\n}",
+          "raw": "{\n  \"name\": \"Demo Student\",\n  \"phone\": \"0123456789\",\n  \"lessonIDs\": [\"{{lessonId}}\"]\n}",
           "options": { "raw": { "language": "json" } }
         },
         "url": { "raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"] }
@@ -94,6 +94,19 @@
         "body": {
           "mode": "raw",
           "raw": "{\n  \"topic\": \"Postman Demo Topic\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/lessons/{{lessonId}}", "host": ["{{baseUrl}}"], "path": ["lessons", "{{lessonId}}"] }
+      }
+    },
+    {
+      "name": "Set remaining spaces to an exact value",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"space\": 4\n}",
           "options": { "raw": { "language": "json" } }
         },
         "url": { "raw": "{{baseUrl}}/lessons/{{lessonId}}", "host": ["{{baseUrl}}"], "path": ["lessons", "{{lessonId}}"] }
@@ -138,3 +151,4 @@
     { "key": "teacherId", "value": "olivia-bennett" }
   ]
 }
+
