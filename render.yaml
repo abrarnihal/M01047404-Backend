@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: m01047404-cst3144-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: DB_NAME
+        value: brightsteps
+      - key: FRONTEND_ORIGIN
+        value: https://abrarnihal.github.io
+      - key: MONGODB_URI
+        sync: false

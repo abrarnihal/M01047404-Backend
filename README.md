@@ -64,6 +64,6 @@ Import [`postman/CST3144-BrightSteps.postman_collection.json`](postman/CST3144-B
 
 ## Render and GitHub Pages
 
-Create a Render Web Service from the public backend repository. Set **Build Command** to `npm install` and **Start Command** to `npm start`. Add `MONGODB_URI`, `DB_NAME=brightsteps`, and `FRONTEND_ORIGIN=https://abrarnihal.github.io` as Render environment variables. In the frontend GitHub repository, set the Actions variable `VITE_API_URL` to the Render service URL and redeploy the Pages site.
+Create the Render Web Service from this repository's `render.yaml` Blueprint. It sets the student-ID service name `m01047404-cst3144-api`, Frankfurt region, `/health` check, Node 24, build command `npm install`, and start command `npm start`. Enter the Atlas connection string when Render prompts for `MONGODB_URI`. In the frontend GitHub repository, set the Actions variable `VITE_API_URL` to the resulting Render service URL and redeploy the Pages site.
 
 Keep database credentials in the local `.env` and Render environment settings; never commit them.
