@@ -4,7 +4,7 @@ Express and MongoDB API for the CST3144 Full Stack Development coursework. The p
 
 ## Run locally in VS Code
 
-1. Install Node.js 20.6 or newer.
+1. Install Node.js 20.19 or newer (Node 24 is used for the Render service).
 2. In the VS Code terminal, open this folder and install packages:
 
    ```sh
