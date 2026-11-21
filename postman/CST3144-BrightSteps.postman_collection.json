@@ -1,0 +1,118 @@
+{
+  "info": {
+    "name": "CST3144 BrightSteps API",
+    "description": "Coursework requests for the Express and MongoDB service. Set lessonId from a record returned by GET /lessons before using the booking, update, and enrolment requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+      }
+    },
+    {
+      "name": "Get all lessons",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/lessons", "host": ["{{baseUrl}}"], "path": ["lessons"] }
+      }
+    },
+    {
+      "name": "Search lessons by text, price, and availability",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/lessons/search?q=art&minPrice=8&maxPrice=15&available=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["lessons", "search"],
+          "query": [
+            { "key": "q", "value": "art" },
+            { "key": "minPrice", "value": "8" },
+            { "key": "maxPrice", "value": "15" },
+            { "key": "available", "value": "true" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get all teachers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/teachers", "host": ["{{baseUrl}}"], "path": ["teachers"] }
+      }
+    },
+    {
+      "name": "Get a teacher's lessons",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/teachers/{{teacherId}}/lessons",
+          "host": ["{{baseUrl}}"],
+          "path": ["teachers", "{{teacherId}}", "lessons"]
+        }
+      }
+    },
+    {
+      "name": "Create an order",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Demo Student\",\n  \"phone\": \"0123456789\",\n  \"lessons\": [\"{{lessonId}}\"]\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"] }
+      }
+    },
+    {
+      "name": "Update lesson spaces",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"spaces\": 4\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{baseUrl}}/lessons/{{lessonId}}", "host": ["{{baseUrl}}"], "path": ["lessons", "{{lessonId}}"] }
+      }
+    },
+    {
+      "name": "Get enrolment count",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/enrolment/{{lessonId}}", "host": ["{{baseUrl}}"], "path": ["enrolment", "{{lessonId}}"] }
+      }
+    },
+    {
+      "name": "Get lesson image",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/lesson-images/clay.svg", "host": ["{{baseUrl}}"], "path": ["lesson-images", "clay.svg"] }
+      }
+    },
+    {
+      "name": "Unknown route returns 404",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/not-a-route", "host": ["{{baseUrl}}"], "path": ["not-a-route"] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "lessonId", "value": "" },
+    { "key": "teacherId", "value": "olivia-bennett" }
+  ]
+}
