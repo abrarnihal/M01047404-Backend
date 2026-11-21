@@ -4,7 +4,7 @@
   "description": "Express and MongoDB API for the CST3144 BrightSteps coursework",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npm run seed && node server.js",
     "dev": "node --watch server.js",
     "seed": "node seed.js"
   },
@@ -25,3 +25,4 @@
     "mongodb": "^7.9.1"
   }
 }
+
