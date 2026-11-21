@@ -105,7 +105,7 @@ router.get('/search', async (request, response) => {
   if (conditions.length > 0) filter.$and = conditions
 
   const lessons = await getDatabase()
-    .collection('lesson')
+    .collection('lessons')
     .find(filter)
     .toArray()
 
@@ -115,7 +115,7 @@ router.get('/search', async (request, response) => {
 // GET /lessons returns the complete catalogue from Atlas.
 router.get('/', async (request, response) => {
   const lessons = await getDatabase()
-    .collection('lesson')
+    .collection('lessons')
     .find({})
     .toArray()
 
@@ -184,7 +184,7 @@ router.put('/:id', async (request, response) => {
     }
   }
 
-  const lessons = getDatabase().collection('lesson')
+  const lessons = getDatabase().collection('lessons')
   const result = await lessons.updateOne({ _id: new ObjectId(id) }, { $set: updates })
 
   if (result.matchedCount === 0) {
@@ -198,3 +198,4 @@ router.put('/:id', async (request, response) => {
 })
 
 module.exports = router
+

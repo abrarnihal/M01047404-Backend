@@ -30,7 +30,7 @@ router.post('/', async (request, response) => {
   const lessonIds = lessons.map((id) => new ObjectId(String(id)))
   const uniqueIds = [...new Map(lessonIds.map((id) => [id.toString(), id])).values()]
   const lessonRecords = await getDatabase()
-    .collection('lesson')
+    .collection('lessons')
     .find({ _id: { $in: uniqueIds } })
     .toArray()
 
@@ -62,7 +62,7 @@ router.post('/', async (request, response) => {
     spaces: lessonIds.length,
     createdAt: new Date(),
   }
-  const result = await getDatabase().collection('order').insertOne(order)
+  const result = await getDatabase().collection('orders').insertOne(order)
 
   response.status(201).json({
     message: 'Booking request saved.',
@@ -72,3 +72,4 @@ router.post('/', async (request, response) => {
 })
 
 module.exports = router
+

@@ -22,7 +22,7 @@ Express and MongoDB API for the CST3144 Full Stack Development coursework. The p
 
    For local development, add `http://localhost:5173` as an additional comma-separated `FRONTEND_ORIGIN` value. Keep the real `.env` file private; Git ignores it.
 
-4. Insert the sample data into the `lesson` and `teacher` collections:
+4. Insert the sample data into the `lessons` and `teachers` collections:
 
    ```sh
    npm run seed
@@ -38,11 +38,11 @@ Express and MongoDB API for the CST3144 Full Stack Development coursework. The p
 
    Open `http://localhost:3000/health`. The class images are served from `/lesson-images/`.
 
-   Render runs `npm start`, which seeds the sample `lesson` and `teacher` collections if either is empty, then starts the API. The seed step does not overwrite existing records.
+   Render runs `npm start`, which migrates any existing singular `lesson`, `order`, and `teacher` collections into their plural names, seeds `lessons` and `teachers` if empty, then starts the API. Existing document IDs and data are preserved.
 
 ## MongoDB Compass
 
-Connect Compass with the same Atlas URI used in `.env`. Open the `brightsteps` database and inspect the `lesson`, `teacher`, and `order` collections. Render seeds ten lessons and five linked teachers; a successful booking creates the `order` collection. Export all three collections from Compass as JSON into `MongoDB-Exports` after the demo booking has been created. Keep these exports in sync with the final Atlas data.
+Connect Compass with the same Atlas URI used in `.env`. Open the `brightsteps` database and inspect the `lessons`, `teachers`, and `orders` collections. Render seeds ten lessons and five linked teachers; a successful booking creates the `orders` collection. Export all three collections from Compass as JSON into `MongoDB-Exports` after the demo booking has been created. Keep these exports in sync with the final Atlas data.
 
 ## API routes
 
@@ -52,7 +52,7 @@ Connect Compass with the same Atlas URI used in `.env`. Open the `brightsteps` d
 | `GET` | `/lessons` | Returns the lesson catalogue. |
 | `GET` | `/lessons/search?q=art&minPrice=8&maxPrice=15&available=true` | Searches title, topic, location, price, remaining-space count, and availability words; optional numeric price and availability filters can be combined. |
 | `PUT` | `/lessons/:id` | Updates one or more lesson attributes, including `topic`, `space`, `price`, or `location`; `subject` and `spaces` are accepted as compatibility aliases. |
-| `POST` | `/orders` | Saves customer name, phone, one `lessonIDs` entry per reserved space, total `spaces`, and booking time in the `order` collection. |
+| `POST` | `/orders` | Saves customer name, phone, one `lessonIDs` entry per reserved space, total `spaces`, and booking time in the `orders` collection. |
 | `GET` | `/teachers` | Returns teachers with their linked lesson counts. |
 | `GET` | `/teachers/:id/lessons` | Returns a teacher and their associated lessons. |
 | `GET` | `/enrolment/:lessonid` | Back-end-only coursework route returning the purchased-space count for one lesson. The frontend does not call it. |
