@@ -38,9 +38,11 @@ Express and MongoDB API for the CST3144 Full Stack Development coursework. The p
 
    Open `http://localhost:3000/health`. The class images are served from `/lesson-images/`.
 
+   Render runs `npm start`, which seeds the sample `lesson` and `teacher` collections if either is empty, then starts the API. The seed step does not overwrite existing records.
+
 ## MongoDB Compass
 
-Connect Compass with the same Atlas URI used in `.env`. Open the `brightsteps` database and inspect the `lesson`, `teacher`, and `order` collections. The `order` collection is created when the first booking is submitted. Export all three collections from Compass as JSON into the coursework `database-export` folder after creating a demo order. Keep these exports in sync with the final Atlas data.
+Connect Compass with the same Atlas URI used in `.env`. Open the `brightsteps` database and inspect the `lesson`, `teacher`, and `order` collections. Render seeds ten lessons and five linked teachers; a successful booking creates the `order` collection. Export all three collections from Compass as JSON into `MongoDB-Exports` after the demo booking has been created. Keep these exports in sync with the final Atlas data.
 
 ## API routes
 
@@ -60,10 +62,11 @@ The request logger prints the timestamp, HTTP method, and URL. Unknown API route
 
 ## Postman
 
-Import [`postman/CST3144-BrightSteps.postman_collection.json`](postman/CST3144-BrightSteps.postman_collection.json). Its `baseUrl` variable defaults to `http://localhost:3000`. Run `GET /lessons` first; its Postman script stores the first lesson ID as `lessonId` for the order, update, and enrolment requests. The `teacherId` variable defaults to `olivia-bennett`. The collection includes search, teacher association, image success and missing-image responses, an arbitrary lesson-attribute update, and an unknown-route 404 request.
+Import [`postman/CST3144-BrightSteps.postman_collection.json`](postman/CST3144-BrightSteps.postman_collection.json). Its `baseUrl` variable defaults to the live Render API. Change it to `http://localhost:3000` when running locally. Run `GET /lessons` first; its Postman script stores the first lesson ID as `lessonId` for the order, update, and enrolment requests. The `teacherId` variable defaults to `olivia-bennett`. The collection includes search, teacher association, image success and missing-image responses, an arbitrary lesson-attribute update, and an unknown-route 404 request.
 
 ## Render and GitHub Pages
 
-Create the Render Web Service from this repository's `render.yaml` Blueprint. It sets the student-ID service name `m01047404-cst3144-api`, Frankfurt region, `/health` check, Node 24, build command `npm install`, and start command `npm start`. Enter the Atlas connection string when Render prompts for `MONGODB_URI`. In the frontend GitHub repository, set the Actions variable `VITE_API_URL` to the resulting Render service URL and redeploy the Pages site.
+The live API is [`https://m01047404-cst3144-api.onrender.com`](https://m01047404-cst3144-api.onrender.com); its live lesson catalogue is [`/lessons`](https://m01047404-cst3144-api.onrender.com/lessons). The frontend is published at [`https://abrarnihal.github.io/cst3144-frontend/`](https://abrarnihal.github.io/cst3144-frontend/). The Render Blueprint sets the student-ID service name `m01047404-cst3144-api`, Frankfurt region, `/health` check, Node 24, build command `npm install`, and start command `npm start`.
 
 Keep database credentials in the local `.env` and Render environment settings; never commit them.
+
